@@ -113,13 +113,56 @@
 - Через gateway можно вызывать API, но swagger открыт на самих сервисах.
 
 ### Просмотр отелей и рекомендованных номеров
-```bash
+```powershell
 Invoke-RestMethod -Method Get -Uri "http://localhost:8080/api/hotels" -Headers @{ Authorization = $auth }
 
 Invoke-RestMethod -Method Get -Uri "http://localhost:8080/api/rooms/recommend?startDate=2026-03-10&endDate=2026-03-12" `
   -Headers @{ Authorization = $auth }
 ```
 <img width="378" height="231" alt="image" src="https://github.com/user-attachments/assets/af099a55-1210-4ffb-8180-e10fa49d23e8" />
+
+### Создание брони
+```powershell
+$reqId = [guid]::NewGuid().ToString()
+$body = @{
+  requestId  = $reqId
+  autoSelect = $true
+  startDate  = "2026-03-10"
+  endDate    = "2026-03-12"
+} | ConvertTo-Json
+
+$created = Invoke-RestMethod -Method Post -Uri "http://localhost:8080/api/booking" `
+  -Headers @{ Authorization = $auth } `
+  -ContentType "application/json" `
+  -Body $body
+
+$created
+$bookingId = $created.id
+```
+<img width="462" height="180" alt="image" src="https://github.com/user-attachments/assets/ac55aca3-9230-4442-ba39-d51ec559d2eb" />
+
+### Идемпотентность create
+```powershell
+Invoke-RestMethod -Method Post -Uri "http://localhost:8080/api/booking" `
+  -Headers @{ Authorization = $auth } `
+  -ContentType "application/json" `
+  -Body $body
+```
+<img width="483" height="183" alt="image" src="https://github.com/user-attachments/assets/5fabaceb-beec-46cb-8386-9e0df8a5844b" />
+
+### Идемпотентность create
+```powershell
+try {
+  $cancelReqId = [guid]::NewGuid().ToString()
+  Invoke-RestMethod -Method Delete -Uri "http://localhost:8081/api/booking/3?requestId=$cancelReqId" `
+    -Headers @{ Authorization = $auth }
+} catch {
+  $_.Exception.Response.StatusCode.value__
+  $r = New-Object System.IO.StreamReader($_.Exception.Response.GetResponseStream())
+  $r.ReadToEnd()
+}
+```
+<img width="490" height="175" alt="image" src="https://github.com/user-attachments/assets/ae2e6bca-33f7-41c4-8e84-91818f71d6a0" />
 
 ---
 
@@ -131,7 +174,7 @@ Invoke-RestMethod -Method Get -Uri "http://localhost:8080/api/rooms/recommend?st
 
 ### Сборка
 Из корня проекта:
-```bash
+```powershell
 mvn -DskipTests clean package
 mvn -pl eureka-server spring-boot:run
 mvn -pl hotel-service spring-boot:run
