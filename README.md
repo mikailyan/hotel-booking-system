@@ -20,7 +20,7 @@
 
 ### Сервисы
 1. **eureka-server**  
-   Реестр сервисов и динамическое обнаружение.
+   <img width="1879" height="937" alt="{5820BB2E-E7CC-49C2-850E-34F1B61720C0}" src="https://github.com/user-attachments/assets/1ce66d17-f734-4bbf-ab4b-9c4d6dbde751" />
 
 2. **api-gateway**  
    Единая точка входа. Маршрутизация `/api/...` запросов в backend-сервисы через Eureka (LB). Прокси-передача `Authorization: Bearer <JWT>` в сервисы.
@@ -31,6 +31,8 @@
    - рекомендация номеров (сортировка по `times_booked`, затем по `id`)
    - подтверждение доступности номера в шаге согласованности (`confirm-availability`)
    - компенсирующее снятие блокировки (`release`) **не публикуется через Gateway**
+   - <img width="1386" height="680" alt="image" src="https://github.com/user-attachments/assets/04414fd2-40f0-445c-b0f9-a99964662081" />
+
 
 4. **booking-service** (Booking Service)  
    - регистрация/авторизация пользователей (JWT)
@@ -38,6 +40,7 @@
    - история и получение бронирования
    - отмена бронирования (компенсация)
    - двухшаговая согласованность с hotel-service: `PENDING -> CONFIRMED`, при сбое `PENDING -> CANCELLED`
+   - <img width="1485" height="772" alt="image" src="https://github.com/user-attachments/assets/a485524c-9d1d-4f71-b587-049aa6565bbf" />
 
 ---
 
