@@ -118,7 +118,7 @@ Invoke-RestMethod -Method Get -Uri "http://localhost:8080/api/hotels" -Headers @
 
 Invoke-RestMethod -Method Get -Uri "http://localhost:8080/api/rooms/recommend?startDate=2026-03-10&endDate=2026-03-12" `
   -Headers @{ Authorization = $auth }
-
+```
 <img width="378" height="231" alt="image" src="https://github.com/user-attachments/assets/af099a55-1210-4ffb-8180-e10fa49d23e8" />
 
 ---
