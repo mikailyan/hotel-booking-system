@@ -112,6 +112,15 @@
 - Hotel: `http://localhost:8082/swagger-ui/index.html`
 - Через gateway можно вызывать API, но swagger открыт на самих сервисах.
 
+### Просмотр отелей и рекомендованных номеров
+```bash
+Invoke-RestMethod -Method Get -Uri "http://localhost:8080/api/hotels" -Headers @{ Authorization = $auth }
+
+Invoke-RestMethod -Method Get -Uri "http://localhost:8080/api/rooms/recommend?startDate=2026-03-10&endDate=2026-03-12" `
+  -Headers @{ Authorization = $auth }
+
+<img width="378" height="231" alt="image" src="https://github.com/user-attachments/assets/af099a55-1210-4ffb-8180-e10fa49d23e8" />
+
 ---
 
 ## Как запустить
