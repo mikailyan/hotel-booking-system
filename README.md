@@ -31,7 +31,7 @@
    - рекомендация номеров (сортировка по `times_booked`, затем по `id`)
    - подтверждение доступности номера в шаге согласованности (`confirm-availability`)
    - компенсирующее снятие блокировки (`release`) **не публикуется через Gateway**
-   - <img width="1386" height="680" alt="image" src="https://github.com/user-attachments/assets/04414fd2-40f0-445c-b0f9-a99964662081" />
+   <img width="1386" height="680" alt="image" src="https://github.com/user-attachments/assets/04414fd2-40f0-445c-b0f9-a99964662081" />
 
 
 4. **booking-service** (Booking Service)  
@@ -40,7 +40,7 @@
    - история и получение бронирования
    - отмена бронирования (компенсация)
    - двухшаговая согласованность с hotel-service: `PENDING -> CONFIRMED`, при сбое `PENDING -> CANCELLED`
-   - <img width="1485" height="772" alt="image" src="https://github.com/user-attachments/assets/a485524c-9d1d-4f71-b587-049aa6565bbf" />
+   <img width="1485" height="772" alt="image" src="https://github.com/user-attachments/assets/a485524c-9d1d-4f71-b587-049aa6565bbf" />
 
 ---
 
@@ -118,9 +118,13 @@
 
 ### Требования
 - Java 17+
-- Maven (или Maven Wrapper, если есть `mvnw`)
+- Maven
 
 ### Сборка
 Из корня проекта:
 ```bash
 mvn -DskipTests clean package
+mvn -pl eureka-server spring-boot:run
+mvn -pl hotel-service spring-boot:run
+mvn -pl booking-service spring-boot:run
+mvn -pl api-gateway spring-boot:run
